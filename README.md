@@ -15,9 +15,31 @@ Intel Macs are not supported. FanMac uses the private AppleSMC IOKit service and
 
 ## Install
 
-FanMac is currently installed by building the app bundle from a local checkout.
+There are two ways to install FanMac: download the free GitHub release, or build the app yourself.
 
-### 1. Build the app
+### Free GitHub release
+
+The free release is ad-hoc signed and **not notarized** because notarization requires the paid Apple Developer Program. It is suitable for personal use and testing on Apple Silicon Macs, but macOS will require a one-time manual approval.
+
+1. Download `FanMac-<version>.zip` from the repository’s [GitHub Releases](https://github.com/catalinstanciu92/fanmacmac/releases) page.
+2. Optionally verify the checksum shown in the matching `.sha256` file:
+
+   ```sh
+   shasum -a 256 FanMac-<version>.zip
+   ```
+
+3. Open the ZIP and drag `FanMac.app` to `/Applications`.
+4. In Finder, Control-click `FanMac.app`, choose **Open**, then choose **Open** again in the warning dialog. This approval is needed because the free build is not notarized.
+5. Open FanMac from `/Applications`. It runs in the menu bar; there is no regular application window.
+6. Turn on **Enable fan control** and approve the administrator authorization prompt to install the privileged helper.
+
+If macOS does not show the second **Open** button, go to **System Settings → Privacy & Security** and choose **Open Anyway** for FanMac. Do not disable Gatekeeper globally. If helper installation fails, use **Restore system control**, quit FanMac, and report the error with the Mac model and macOS version.
+
+### Build from source
+
+FanMac must be launched as an `.app` bundle; launching the raw executable from `.build` cannot install the privileged helper.
+
+#### 1. Build the app
 
 From the repository root, run:
 
@@ -27,7 +49,7 @@ From the repository root, run:
 
 The script builds the arm64 app and privileged helper, assembles them into `dist/FanMac.app`, and applies an ad-hoc signature suitable for local use.
 
-### 2. Launch FanMac
+#### 2. Launch FanMac
 
 You can run the app directly from the build output:
 
@@ -37,7 +59,7 @@ open dist/FanMac.app
 
 For everyday use, drag `dist/FanMac.app` to `/Applications` in Finder and launch it from there. FanMac must be launched as an `.app` bundle; launching the raw executable from `.build` cannot install the privileged helper.
 
-### 3. Approve the privileged helper
+#### 3. Approve the privileged helper
 
 The first time you turn on the **Enable fan control** switch:
 
@@ -47,7 +69,7 @@ The first time you turn on the **Enable fan control** switch:
 
 The helper performs only the privileged fan write and release operations. If authorization is cancelled or installation fails, FanMac leaves the switch off and does not apply a fan curve.
 
-### Signed builds
+#### Signed builds
 
 Ad-hoc signing is convenient for local development. For a build that can be installed more reliably or distributed to other Macs, sign both the app and helper with an Apple signing identity:
 
