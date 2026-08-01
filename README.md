@@ -4,6 +4,9 @@ FanMac is a native macOS menu-bar app for Apple Silicon MacBooks. It reads one s
 
 FanMac is intentionally conservative: every manual target is clamped to the limits reported by AppleSMC, and the app returns control to macOS when safety telemetry or fan writes cannot be verified.
 
+<img width="862" height="1340" alt="image" src="https://github.com/user-attachments/assets/d0231cd8-16c3-4709-a8c3-51a17c34fcbf" />
+
+
 ## Requirements
 
 - Apple Silicon MacBook (`arm64`)
